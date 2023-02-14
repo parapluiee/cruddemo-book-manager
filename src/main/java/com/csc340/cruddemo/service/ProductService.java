@@ -16,6 +16,9 @@ public class ProductService {
     Map<String, Product> products=new HashMap<>();
 
     public Collection<Product> getProducts() {
+         if (products.isEmpty()) {
+            products.put("123x", new Product("123x", "sample", 1.25));
+        }
         return products.values();
     }
 
