@@ -18,13 +18,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/products")
 public class ProductController {
 
-    @Autowired
+    @Autowired //depend on product service, injected by spring, not needed to instantiate
     ProductService productService;
 
-    @GetMapping("/all")
+    @GetMapping("/all") //map get to specific url
     public String getProducts(Model model) {
         model.addAttribute("productList", productService.getProducts());
-        return "products";
+        return "products"; //return to view called products, if something with same name is returned will show on that view
+        //uses specific model.
+        //Here adding attribute with name 'productList', with values of a product array
+        //if productList does not exist in view "products", error occurs.
     }
 
     @GetMapping("/id={productId}")
@@ -39,7 +42,7 @@ public class ProductController {
         return "redirect:/products/all";
     }
 
-    @PostMapping("/create")
+    @PostMapping("/create") //map post to this url
     public String createProduct(Product product) {
 
         if (product == null) {
@@ -50,7 +53,7 @@ public class ProductController {
     }
 
     @PostMapping("/update")
-    public String upateProduct(Product product) {
+    public String updateProduct(Product product) {
         productService.updateProduct(product);
         return "redirect:/products/all";
     }
@@ -58,7 +61,7 @@ public class ProductController {
     @GetMapping("/new-product")
     public String newProductForm(Model model) {
         return "new-product";
-    }
+    } //only sends user to view 'new-product'
 
     @GetMapping("/update/id={productId}")
     public String updateProductForm(@PathVariable String productId, Model model) {
